@@ -4,6 +4,8 @@ import argparse
 import h5py
 from tqdm import tqdm
 import time
+import multiprocessing as mp
+from functools import partial
 
 #######################################
 # Create command line argument parser
@@ -172,7 +174,7 @@ def main():
     for i, skidx in enumerate(tqdm(n)):
 
         # load a single file for info
-        fname = f'{args.input}/{args.snap}/{args.snap}.h5.{i}'
+        fname = f'{args.input}/{args.snap}/{args.snap}.h5.{skidx}'
 
         print(fname)
 
