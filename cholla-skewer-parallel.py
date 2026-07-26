@@ -59,18 +59,23 @@ def worker(task_queue, progress_queue, args):
         iz = task['iz']
 
         if args.z:
-            di = 0
-            n = args.ngpuy * args.ngpuz * ix + args.ngpuz * iy + np.arange(args.ngpuz)
+            di = 2
+#            n = args.ngpuy * args.ngpuz * ix + args.ngpuz * iy + np.arange(args.ngpuz)
+            n = ix + iy * args.ngpux + np.arange(args.ngpuz) * args.ngpux * args.ngpuy
             mom = 'momentum_z'
             out_file = f"{args.output}_ix{ix}_iy{iy}.h5"
         elif args.y:
             di = 1
-            n = args.ngpuy * args.ngpuz * ix + args.ngpuz * np.arange(args.ngpuy) + iz
+#            n = ix + args.ngpux * np.arange(args.ngpuy) * args.ngpux + args.ngpux * args.ngpuy *  + iz
+            n = ix + np.arange(args.ngpuy) * args.ngpux +  iz * args.ngpux * args.ngpuy
+
             mom = 'momentum_y'
             out_file = f"{args.output}_ix{ix}_iz{iz}.h5"
         elif args.x:
-            di = 2
-            n = args.ngpuy * args.ngpuz * np.arange(args.ngpux) + args.ngpuz * iy + iz
+            di = 0
+#            n = args.ngpuy * args.ngpuz * np.arange(args.ngpux) + args.ngpuz * iy + iz
+            n = np.arange(args.ngpux) + iy * args.ngpux +  iz * args.ngpux * args.ngpuy
+
             mom = 'momentum_x'
             out_file = f"{args.output}_iy{iy}_iz{iz}.h5"
 
